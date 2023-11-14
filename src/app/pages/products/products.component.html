@@ -1,0 +1,78 @@
+<section class="container">
+  <div class="col-2 pt-60">
+    <input type="search" name="search" placeholder="Search..." class="form-control" [formControl]="search">
+  </div>
+  <div class="table-container">
+    <div class="table-body">
+      <table class="w-full" cdk-table [dataSource]="dataSource">
+        <!-- Logo Column -->
+        <ng-container cdkColumnDef="logo">
+          <th cdk-header-cell *cdkHeaderCellDef class="text-center"> Logo </th>
+          <td cdk-cell *cdkCellDef="let element" class="text-center w-1">
+            <img [src]="element.logo" alt="logo" class="table-logo">
+            <!-- {{element.logo}} -->
+          </td>
+        </ng-container>
+        <!-- Name Column -->
+        <ng-container cdkColumnDef="name">
+          <th cdk-header-cell *cdkHeaderCellDef> Nombre del producto </th>
+          <td cdk-cell *cdkCellDef="let element" class="px-6 py-4"> {{element.name}} </td>
+        </ng-container>
+        <!-- Description Column -->
+        <ng-container cdkColumnDef="description">
+          <th cdk-header-cell *cdkHeaderCellDef>
+            <div class="informative-icon">
+              <span>Descripción</span>
+              <img src="/assets/icons/info_icon.svg" alt="info icon">
+            </div>
+          </th>
+          <td cdk-cell *cdkCellDef="let element" class="px-6 py-4"> {{ element.description }} </td>
+        </ng-container>
+        <!-- Date Release Column -->
+        <ng-container cdkColumnDef="date_release">
+          <th cdk-header-cell *cdkHeaderCellDef>
+            <div class="informative-icon">
+              <span>Fecha de liberación</span>
+              <img src="/assets/icons/info_icon.svg" alt="info icon">
+            </div>
+          </th>
+          <td cdk-cell *cdkCellDef="let element" class="px-6 py-4">
+            {{ element.date_release | date : 'dd/MM/yyyy' }}
+          </td>
+        </ng-container>
+        <!-- Date Revision Column -->
+        <ng-container cdkColumnDef="date_revision">
+          <th cdk-header-cell *cdkHeaderCellDef>
+            <div class="informative-icon">
+              <span>Fecha de reestructuración</span>
+              <img src="/assets/icons/info_icon.svg" alt="info icon">
+            </div>
+          </th>
+          <td cdk-cell *cdkCellDef="let element" class="px-6 py-4">
+            {{ element.date_revision | date : 'dd/MM/yyyy' }}
+          </td>
+        </ng-container>
+        <!-- Actions Column -->
+        <ng-container cdkColumnDef="actions">
+          <th cdk-header-cell *cdkHeaderCellDef> </th>
+          <td cdk-cell *cdkCellDef="let element" class="px-6 py-4">
+            <!-- <app-btn (click)="update(element)">Update</app-btn> -->
+          </td>
+        </ng-container>
+
+        <tr cdk-header-row *cdkHeaderRowDef="columns" class="bg-gray-10 border-b-2"></tr>
+        <tr cdk-row *cdkRowDef="let row; columns: columns;" class="border-b"></tr>
+      </table>
+    </div>
+    <div class="paginate">
+      <span>{{dataSource.count}} Resultado{{dataSource.count > 1 ? 's' : ''}} de {{dataSource.total}}</span>
+      <div>
+        <select class="form-select" name="size" id="size" title="Cantidad de productos" [formControl]="pageSize">
+          @for (size of pageSizeOptions; track size) {
+          <option [value]="size">{{size}}</option>
+          }
+        </select>
+      </div>
+    </div>
+  </div>
+</section>

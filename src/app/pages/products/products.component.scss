@@ -1,0 +1,60 @@
+.table-container {
+  background-color: white;
+  padding: 1rem;
+  padding-bottom: 2rem;
+  margin-top: 1rem;
+
+  .table-body {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: calc(100vh - 22rem);
+    // Estilos del scrollbar en navegadores webkit (Chrome, Safari)
+    &::-webkit-scrollbar {
+      height: 0.5rem;
+      width: 0.5rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--bs-gray-600);
+      border-radius: 0.5rem;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: var(--bs-gray-200);
+      border-radius: 0.5rem;
+    }
+
+    &::-webkit-scrollbar-corner,
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
+
+    table {
+      color: var(--bs-gray-800);
+    }
+  }
+}
+
+.table-logo {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+}
+
+.paginate {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.informative-icon {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+
+  img {
+    width: 1rem;
+    align-self: center;
+    margin-top: 5px;
+  }
+}
