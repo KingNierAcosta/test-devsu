@@ -29,6 +29,12 @@ export class ProductService {
     return this.http.put<Product>(`${this.urlBase}bp/products`, body);
   }
 
+  removeProduct(id: string) {
+    let params = new HttpParams();
+    params = params.append('id', id);
+    return this.http.delete(`${this.urlBase}bp/products`, { params, responseType: 'text' });
+  }
+
   uniqueProductId(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       let params = new HttpParams();

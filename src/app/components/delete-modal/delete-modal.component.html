@@ -1,0 +1,14 @@
+<div class="flex flex-col sm-modal">
+  <div class="modal-body">
+    <h3>¿Estás seguro de eliminar el producto {{ product.name }} ?</h3>
+  </div>
+  <div class="flex justify-between modal-footer">
+    <button (click)="close()" type="button" title="Cancelar" class="w-full rounded btn-secondary" [disabled]="removing">
+      Cancelar
+    </button>
+    <button (click)="removeProduct()" type="button" title="Confirmar" class="w-full rounded btn-default"
+      [disabled]="removing">
+      Confirmar
+    </button>
+  </div>
+</div>

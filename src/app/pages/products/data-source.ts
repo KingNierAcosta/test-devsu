@@ -6,6 +6,7 @@ export class DataSourceProduct extends DataSource<Product> {
 
   data = new BehaviorSubject<Product[]>([]);
   originalData: Product[] = [];
+  size: number = 5;
 
   override connect(collectionViewer: CollectionViewer): Observable<readonly Product[]> {
     return this.data;
@@ -16,6 +17,7 @@ export class DataSourceProduct extends DataSource<Product> {
   }
 
   init(products: Product[], size: number) {
+    this.size = size;
     this.data.next(products.slice(0, size));
     this.originalData = products;
   }
@@ -38,6 +40,11 @@ export class DataSourceProduct extends DataSource<Product> {
       return word.toLowerCase().includes(query.toLowerCase())
     });
     this.data.next(newProducts);
+  }
+
+  delete(id: string) {
+    this.originalData = this.originalData.filter(it => it.id.toLowerCase() !== id.toLowerCase());
+    this.data.next(this.originalData.slice(0, this.size));
   }
 
   get count() {

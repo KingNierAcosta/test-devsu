@@ -5,20 +5,19 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { ProductService } from '../../services/product.service';
 import { DestroyComponent } from '../../components/destroy/destroy.component';
 import { DataSourceProduct } from './data-source';
-import { debounceTime, takeUntil } from 'rxjs';
+import { debounceTime, filter, takeUntil } from 'rxjs';
 import { Router, RouterModule } from '@angular/router';
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { Product } from '../../models/product.model';
+import { Dialog, DialogModule } from '@angular/cdk/dialog';
+import { DeleteModalComponent } from '../../components/delete-modal/delete-modal.component';
 
 @Component({
   selector: 'app-products',
   standalone: true,
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
-  providers: [
-    ProductService
-  ],
   imports: [
     CommonModule,
     CdkTableModule,
@@ -27,7 +26,8 @@ import { Product } from '../../models/product.model';
     RouterModule,
     CdkMenuTrigger,
     CdkMenu,
-    CdkMenuItem
+    CdkMenuItem,
+    DialogModule
   ]
 })
 export class ProductsComponent extends DestroyComponent implements OnInit {
@@ -41,6 +41,7 @@ export class ProductsComponent extends DestroyComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private router: Router,
+    private dialog: Dialog
   ) {
     super();
   }
@@ -71,8 +72,18 @@ export class ProductsComponent extends DestroyComponent implements OnInit {
   }
 
   removeProduct(element: Product) {
-    console.log(element);
+    const modalRef = this.dialog.open(DeleteModalComponent, {
+      data: element
+    });
 
+    modalRef.closed
+      .pipe(
+        filter(output => !!output),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(output => {
+        this.dataSource.delete(output as string);
+      })
   }
 
 }

@@ -1,6 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@angular/cdk/overlay-prebuilt.css';
-@import url("https://fonts.cdnfonts.com/css/lato");
+@import "@angular/cdk/overlay-prebuilt.css";
+
+@font-face {
+  font-family: "Pacifico";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Pacifico Regular"), local("Pacifico-Regular"),
+    url("https://fonts.cdnfonts.com/css/lato");
+  font-display: swap;
+}
 
 :root {
   --bs-black: #000;
@@ -127,7 +135,7 @@ button {
 
   img {
     width: 1.25rem;
-    height: auto;
+    height: 1.25rem;
     display: block;
   }
 

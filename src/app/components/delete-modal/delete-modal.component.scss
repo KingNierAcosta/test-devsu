@@ -1,0 +1,15 @@
+.sm-modal {
+  background-color: white;
+  max-width: 500px;
+  border-radius: 0.5rem;
+}
+
+.modal-body {
+  padding: 2rem;
+}
+
+.modal-footer {
+  border-top: 1px solid var(--bs-gray-300);
+  padding: 1.5rem 2rem;
+  gap: 2rem;
+}
