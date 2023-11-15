@@ -2,42 +2,88 @@
   <div class="flex item-center pt-60">
     <div class="form-container">
       <h1 class="">Formulario de Registro</h1>
-      <form action="" class="row">
+      <form action="" class="row" [formGroup]="form" (ngSubmit)="onSaveForm()">
         <div class="col-12 col-sm-6">
           <label for="id" class="form-label">ID</label>
-          <input type="text" id="id" class="form-control">
-          <div class="invalid-feedback">
-            Please provide a valid city.
+          <input type="text" id="id" class="form-control" formControlName="id">
+          <div *ngIf="id?.invalid && (id?.dirty || id?.touched)" class="alert alert-danger">
+            <div *ngIf="id?.hasError('required')" class="invalid-feedback">
+              Este campo es requerido!
+            </div>
+            <div *ngIf="id?.hasError('minlength')" class="invalid-feedback">
+              El id debe tener al menos 3 caracteres!
+            </div>
+            <div *ngIf="id?.hasError('maxlength')" class="invalid-feedback">
+              El id no debe ser mayor a 10 caracteres!
+            </div>
+            <div *ngIf="id?.hasError('uniqueId')" class="invalid-feedback">
+              ID no válido!
+            </div>
           </div>
         </div>
         <div class="col-12 col-sm-6">
           <label for="name" class="form-label">Nombre</label>
-          <input type="text" id="name" class="form-control">
+          <input type="text" id="name" class="form-control" formControlName="name">
+          <div *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="alert alert-danger">
+            <div *ngIf="name?.hasError('required')" class="invalid-feedback">
+              Este campo es requerido!
+            </div>
+            <div *ngIf="name?.hasError('minlength')" class="invalid-feedback">
+              El nombre debe tener al menos 5 caracteres!
+            </div>
+            <div *ngIf="name?.hasError('maxlength')" class="invalid-feedback">
+              El nombre no debe ser mayor a 100 caracteres!
+            </div>
+          </div>
         </div>
 
         <div class="col-12 col-sm-6">
           <label for="description" class="form-label">Descriptión</label>
-          <input type="text" id="description" class="form-control">
+          <input type="text" id="description" class="form-control" formControlName="description">
+          <div *ngIf="description?.invalid && (description?.dirty || description?.touched)" class="alert alert-danger">
+            <div *ngIf="description?.hasError('required')" class="invalid-feedback">
+              Este campo es requerido!
+            </div>
+            <div *ngIf="description?.hasError('minlength')" class="invalid-feedback">
+              La descripcion debe tener al menos 10 caracteres!
+            </div>
+            <div *ngIf="description?.hasError('maxlength')" class="invalid-feedback">
+              La descripcion no debe ser mayor a 200 caracteres!
+            </div>
+          </div>
         </div>
         <div class="col-12 col-sm-6">
           <label for="logo" class="form-label">Logo</label>
-          <input type="url" id="logo" class="form-control" disabled>
+          <input type="url" id="logo" class="form-control" formControlName="logo">
+          <div *ngIf="logo?.invalid && (logo?.dirty || logo?.touched)" class="alert alert-danger">
+            <div *ngIf="logo?.hasError('required')" class="invalid-feedback">
+              Este campo es requerido!
+            </div>
+          </div>
         </div>
 
         <div class="col-12 col-sm-6">
           <label for="date_release" class="form-label">Fecha Liberación</label>
-          <input type="date" id="date_release" class="form-control">
+          <input type="date" id="date_release" class="form-control" formControlName="date_release">
+          <div *ngIf="dateRelease?.invalid && (dateRelease?.dirty || dateRelease?.touched)" class="alert alert-danger">
+            <div *ngIf="dateRelease?.hasError('required')" class="invalid-feedback">
+              Este campo es requerido!
+            </div>
+            <div *ngIf="dateRelease?.hasError('currentDate')" class="invalid-feedback">
+              La fecha debe ser igual o mayor a la fecha actual!
+            </div>
+          </div>
         </div>
         <div class="col-12 col-sm-6">
           <label for="date_revision" class="form-label">Fecha Revisión</label>
-          <input type="date" id="date_revision" class="form-control ng-invalid">
+          <input type="date" id="date_revision" class="form-control" formControlName="date_revision">
         </div>
 
         <div class="col-12 form-actions">
-          <button type="reset" title="Agregar" class="rounded btn-secondary" routerLink="/add" >
+          <button type="reset" title="Agregar" class="rounded btn-secondary" [disabled]="!form.touched || loading">
             Reiniciar
           </button>
-          <button type="submit" title="Agregar" class="rounded btn-default" routerLink="/add">
+          <button type="submit" title="Agregar" class="rounded btn-default" [disabled]="form.invalid || loading">
             Enviar
           </button>
         </div>

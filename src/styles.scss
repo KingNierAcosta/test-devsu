@@ -91,6 +91,11 @@ header {
   height: calc(100vh - 5.625rem);
   background-color: #f4f6f9;
   padding: 0;
+
+  .actions {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
 .placeholder {
@@ -127,7 +132,7 @@ button {
   }
 }
 
-.ng-invalid:not(form) {
+.ng-invalid:not(form).ng-touched {
   border: 1px solid #dc3545;
 }
 
@@ -333,6 +338,11 @@ td {
 @media (min-width: 576px) {
   .container {
     padding: 0 3rem;
+
+    .actions {
+      padding-left: 0rem;
+      padding-right: 0rem;
+    }
   }
 
   .col-sm-1 {

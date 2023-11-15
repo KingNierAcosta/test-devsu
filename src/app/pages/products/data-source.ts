@@ -16,13 +16,8 @@ export class DataSourceProduct extends DataSource<Product> {
   }
 
   init(products: Product[], size: number) {
-    for (let i = 0; i < 500; i++) {
-      // Alternar entre los dos valores del array original
-      products.push(products[0]);
-    }
     this.data.next(products.slice(0, size));
     this.originalData = products;
-    products.length
   }
 
   update(id: string, changes: Partial<Product>) {

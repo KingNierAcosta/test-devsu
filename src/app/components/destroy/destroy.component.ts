@@ -10,10 +10,10 @@ import { Subject } from 'rxjs';
 })
 export class DestroyComponent implements OnDestroy {
 
-  destroy$ = new Subject<void>();
+  destroy$ = new Subject<boolean>();
 
   ngOnDestroy(): void {
-    this.destroy$.next();
+    this.destroy$.next(true);
     this.destroy$.complete();
   }
 
