@@ -1,0 +1,46 @@
+.form-container {
+  background-color: white;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 45rem;
+
+  h1 {
+    padding: 1rem 0.25rem;
+  }
+
+  form {
+    border-top: 1px solid var(--bs-gray-700);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.row > * {
+  flex-shrink: 0;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 3rem !important;
+  margin-bottom: 1.5rem;
+}

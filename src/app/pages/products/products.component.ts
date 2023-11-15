@@ -6,7 +6,7 @@ import { ProductService } from '../../services/product.service';
 import { DestroyComponent } from '../../components/destroy/destroy.component';
 import { DataSourceProduct } from './data-source';
 import { debounceTime, takeUntil } from 'rxjs';
-import { BtnComponent } from "../../components/btn/btn.component";
+import { RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-products',
@@ -20,7 +20,7 @@ import { BtnComponent } from "../../components/btn/btn.component";
         CommonModule,
         CdkTableModule,
         ReactiveFormsModule,
-        BtnComponent
+        RouterModule
     ]
 })
 export class ProductsComponent extends DestroyComponent implements OnInit {
