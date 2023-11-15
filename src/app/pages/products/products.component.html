@@ -1,6 +1,7 @@
 <section class="container">
-  <div class="col-2 pt-60">
-    <input type="search" name="search" placeholder="Search..." class="form-control" [formControl]="search">
+  <div class="pt-60 flex justify-between">
+    <input type="search" name="search" placeholder="Search..." class="form-control col-8 col-sm-6 col-md-2" [formControl]="search">
+    <app-btn class="btn-default">Agregar</app-btn>
   </div>
   <div class="table-container">
     <div class="table-body">

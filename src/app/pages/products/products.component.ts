@@ -6,20 +6,22 @@ import { ProductService } from '../../services/product.service';
 import { DestroyComponent } from '../../components/destroy/destroy.component';
 import { DataSourceProduct } from './data-source';
 import { debounceTime, takeUntil } from 'rxjs';
+import { BtnComponent } from "../../components/btn/btn.component";
 
 @Component({
-  selector: 'app-products',
-  standalone: true,
-  templateUrl: './products.component.html',
-  styleUrl: './products.component.scss',
-  imports: [
-    CommonModule,
-    CdkTableModule,
-    ReactiveFormsModule
-  ],
-  providers: [
-    ProductService
-  ]
+    selector: 'app-products',
+    standalone: true,
+    templateUrl: './products.component.html',
+    styleUrl: './products.component.scss',
+    providers: [
+        ProductService
+    ],
+    imports: [
+        CommonModule,
+        CdkTableModule,
+        ReactiveFormsModule,
+        BtnComponent
+    ]
 })
 export class ProductsComponent extends DestroyComponent implements OnInit {
 
