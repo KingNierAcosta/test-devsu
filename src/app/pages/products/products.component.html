@@ -13,7 +13,7 @@
         <ng-container cdkColumnDef="logo">
           <th cdk-header-cell *cdkHeaderCellDef class="text-center"> Logo </th>
           <td cdk-cell *cdkCellDef="let element" class="text-center w-1">
-            <img [src]="element.logo" alt="logo" class="table-logo">
+            <img loading="lazy" [src]="element.logo" alt="logo" class="table-logo">
             <!-- {{element.logo}} -->
           </td>
         </ng-container>
@@ -27,7 +27,7 @@
           <th cdk-header-cell *cdkHeaderCellDef>
             <div class="informative-icon">
               <span>Descripción</span>
-              <img src="/assets/icons/info_icon.svg" alt="info icon">
+              <img title="Info"  src="/assets/icons/info_icon.svg" alt="info icon">
             </div>
           </th>
           <td cdk-cell *cdkCellDef="let element" class="px-6 py-4"> {{ element.description }} </td>
@@ -37,7 +37,7 @@
           <th cdk-header-cell *cdkHeaderCellDef>
             <div class="informative-icon">
               <span>Fecha de liberación</span>
-              <img src="/assets/icons/info_icon.svg" alt="info icon">
+              <img title="Info"  src="/assets/icons/info_icon.svg" alt="info icon">
             </div>
           </th>
           <td cdk-cell *cdkCellDef="let element" class="px-6 py-4">
@@ -49,7 +49,7 @@
           <th cdk-header-cell *cdkHeaderCellDef>
             <div class="informative-icon">
               <span>Fecha de reestructuración</span>
-              <img src="/assets/icons/info_icon.svg" alt="info icon">
+              <img title="Info" src="/assets/icons/info_icon.svg" alt="info icon">
             </div>
           </th>
           <td cdk-cell *cdkCellDef="let element" class="px-6 py-4">
@@ -60,7 +60,17 @@
         <ng-container cdkColumnDef="actions">
           <th cdk-header-cell *cdkHeaderCellDef> </th>
           <td cdk-cell *cdkCellDef="let element" class="px-6 py-4">
-            <!-- <app-btn (click)="update(element)">Update</app-btn> -->
+            <button type="button" title="Acciones" class="btn-img" [cdkMenuTriggerFor]="menu">
+              <img src="/assets/icons/menu-vertical.svg" alt="menu-vertical">
+            </button>
+
+            <ng-template #menu>
+              <div class="oberlay-menu" cdkMenu>
+                <button class="oberlay-menu-item" cdkMenuItem (click)="editProduct(element)">Editar</button>
+                <button class="oberlay-menu-item danger" cdkMenuItem (click)="removeProduct(element)">Eliminar</button>
+              </div>
+            </ng-template>
+
           </td>
         </ng-container>
 

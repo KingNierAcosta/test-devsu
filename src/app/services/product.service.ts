@@ -25,6 +25,10 @@ export class ProductService {
     return this.http.post<Product>(`${this.urlBase}bp/products`, body);
   }
 
+  editProduct(body: Product) {
+    return this.http.put<Product>(`${this.urlBase}bp/products`, body);
+  }
+
   uniqueProductId(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       let params = new HttpParams();

@@ -6,22 +6,29 @@ import { ProductService } from '../../services/product.service';
 import { DestroyComponent } from '../../components/destroy/destroy.component';
 import { DataSourceProduct } from './data-source';
 import { debounceTime, takeUntil } from 'rxjs';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { Product } from '../../models/product.model';
 
 @Component({
-    selector: 'app-products',
-    standalone: true,
-    templateUrl: './products.component.html',
-    styleUrl: './products.component.scss',
-    providers: [
-        ProductService
-    ],
-    imports: [
-        CommonModule,
-        CdkTableModule,
-        ReactiveFormsModule,
-        RouterModule
-    ]
+  selector: 'app-products',
+  standalone: true,
+  templateUrl: './products.component.html',
+  styleUrl: './products.component.scss',
+  providers: [
+    ProductService
+  ],
+  imports: [
+    CommonModule,
+    CdkTableModule,
+    OverlayModule,
+    ReactiveFormsModule,
+    RouterModule,
+    CdkMenuTrigger,
+    CdkMenu,
+    CdkMenuItem
+  ]
 })
 export class ProductsComponent extends DestroyComponent implements OnInit {
 
@@ -33,6 +40,7 @@ export class ProductsComponent extends DestroyComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
+    private router: Router,
   ) {
     super();
   }
@@ -57,8 +65,13 @@ export class ProductsComponent extends DestroyComponent implements OnInit {
       .subscribe(size => this.dataSource.changePageSize(size));
   }
 
-  changeSize(size: number) {
-    console.log(size);
+
+  editProduct(element: Product) {
+    this.router.navigate(['/edit', element.id], { state: { data: element } })
+  }
+
+  removeProduct(element: Product) {
+    console.log(element);
 
   }
 

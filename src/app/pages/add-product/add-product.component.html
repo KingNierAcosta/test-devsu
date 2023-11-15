@@ -6,17 +6,17 @@
         <div class="col-12 col-sm-6">
           <label for="id" class="form-label">ID</label>
           <input type="text" id="id" class="form-control" formControlName="id">
-          <div *ngIf="id?.invalid && (id?.dirty || id?.touched)" class="alert alert-danger">
-            <div *ngIf="id?.hasError('required')" class="invalid-feedback">
+          <div *ngIf="prodctId?.invalid && (prodctId?.dirty || prodctId?.touched)" class="alert alert-danger">
+            <div *ngIf="prodctId?.hasError('required')" class="invalid-feedback">
               Este campo es requerido!
             </div>
-            <div *ngIf="id?.hasError('minlength')" class="invalid-feedback">
+            <div *ngIf="prodctId?.hasError('minlength')" class="invalid-feedback">
               El id debe tener al menos 3 caracteres!
             </div>
-            <div *ngIf="id?.hasError('maxlength')" class="invalid-feedback">
+            <div *ngIf="prodctId?.hasError('maxlength')" class="invalid-feedback">
               El id no debe ser mayor a 10 caracteres!
             </div>
-            <div *ngIf="id?.hasError('uniqueId')" class="invalid-feedback">
+            <div *ngIf="prodctId?.hasError('uniqueId')" class="invalid-feedback">
               ID no válido!
             </div>
           </div>
