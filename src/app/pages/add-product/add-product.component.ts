@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { ProductService } from '../../services/product.service';
 import { currentDateValidator } from '../../validators/current-date.validator';
 import { DestroyComponent } from '../../components/destroy/destroy.component';
-import { finalize, takeUntil } from 'rxjs';
+import { filter, finalize, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
 import { Product } from '../../models/product.model';
 
@@ -44,16 +44,16 @@ export class AddProductComponent extends DestroyComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      id: new FormControl('', {
+      id: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3), Validators.max(10)],
         asyncValidators: [this.productService.uniqueProductId()],
         updateOn: 'blur'
       }),
-      name: new FormControl('', [Validators.required, Validators.minLength(5), Validators.max(100)]),
-      description: new FormControl('', [Validators.required, Validators.minLength(10), Validators.max(200)]),
-      logo: new FormControl('', Validators.required),
-      date_release: new FormControl('', [Validators.required, currentDateValidator()]),
-      date_revision: new FormControl({ value: '', disabled: true }, Validators.required),
+      name: new FormControl(null, [Validators.required, Validators.minLength(5), Validators.max(100)]),
+      description: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.max(200)]),
+      logo: new FormControl(null, Validators.required),
+      date_release: new FormControl(null, [Validators.required, currentDateValidator()]),
+      date_revision: new FormControl({ value: null, disabled: true }, Validators.required),
     });
 
     if (this.id && this.product) {
@@ -118,8 +118,9 @@ export class AddProductComponent extends DestroyComponent implements OnInit {
     this.loading = true;
     this.productService.addProduct(this.form.getRawValue())
       .pipe(
+        finalize(() => this.loading = false),
         takeUntil(this.destroy$),
-        finalize(() => this.loading = false)
+        filter(response => !!response?.status && response.status === 200)
       )
       .subscribe(() => this.form.reset());
   }

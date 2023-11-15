@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product.model';
 import { environment } from '../../environments/environment.development';
@@ -21,8 +21,16 @@ export class ProductService {
     return this.http.get<Product[]>(`${this.urlBase}bp/products`);
   }
 
-  addProduct(body: Product) {
-    return this.http.post<Product>(`${this.urlBase}bp/products`, body);
+  addProduct(body: Product): Observable<{ status: number, body: any } | any> {
+    return this.http.post(`${this.urlBase}bp/products`, body, { observe: 'events' })
+      .pipe(
+        map((event: HttpEvent<any>) => {
+          if (event instanceof HttpResponse) {
+            return { status: event.status, body: event.body };
+          }
+          return event;
+        })
+      )
   }
 
   editProduct(body: Product) {
