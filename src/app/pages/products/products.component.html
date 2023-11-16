@@ -27,7 +27,7 @@
           <th cdk-header-cell *cdkHeaderCellDef>
             <div class="informative-icon">
               <span>Descripción</span>
-              <img title="Info"  src="/assets/icons/info_icon.svg" alt="info icon">
+              <img title="Info" src="/assets/icons/info_icon.svg" alt="info icon">
             </div>
           </th>
           <td cdk-cell *cdkCellDef="let element" class="px-6 py-4"> {{ element.description }} </td>
@@ -37,7 +37,7 @@
           <th cdk-header-cell *cdkHeaderCellDef>
             <div class="informative-icon">
               <span>Fecha de liberación</span>
-              <img title="Info"  src="/assets/icons/info_icon.svg" alt="info icon">
+              <img title="Info" src="/assets/icons/info_icon.svg" alt="info icon">
             </div>
           </th>
           <td cdk-cell *cdkCellDef="let element" class="px-6 py-4">
@@ -66,8 +66,10 @@
 
             <ng-template #menu>
               <div class="oberlay-menu" cdkMenu>
-                <button type="button" class="oberlay-menu-item" cdkMenuItem (click)="editProduct(element)">Editar</button>
-                <button type="button" class="oberlay-menu-item danger" cdkMenuItem (click)="removeProduct(element)">Eliminar</button>
+                <button type="button" class="oberlay-menu-item" cdkMenuItem
+                  (click)="editProduct(element)">Editar</button>
+                <button type="button" class="oberlay-menu-item danger" cdkMenuItem
+                  (click)="removeProduct(element)">Eliminar</button>
               </div>
             </ng-template>
 
@@ -80,7 +82,18 @@
     </div>
     <div class="paginate">
       <span>{{dataSource.count}} Resultado{{dataSource.count > 1 ? 's' : ''}} de {{dataSource.total}}</span>
-      <div>
+      <div class="pagination">
+        <div class="pagination-btns">
+          <button type="button" title="Anterior" class="prev" (click)="dataSource.prev()"
+            [disabled]="!dataSource.hasPrev">
+            &lt;
+          </button>
+          <button type="button" title="Página" class="current-page">{{ dataSource.currentPage }}</button>
+          <button type="button" title="Siguiente" class="next" (click)="dataSource.next()"
+            [disabled]="!dataSource.hasNext">
+            &gt;
+          </button>
+        </div>
         <select class="form-select" name="size" id="size" title="Cantidad de productos" [formControl]="pageSize">
           @for (size of pageSizeOptions; track size) {
           <option [value]="size">{{size}}</option>
