@@ -75,11 +75,16 @@ describe('Product Datasource', () => {
   it('should delete a product', async () => {
     dataSource.init(products, 5);
     dataSource.delete((12).toString());
-    const result = await firstValueFrom(dataSource.data);
+    let result = await firstValueFrom(dataSource.data);
     expect(result).toHaveLength(5);
     expect(dataSource.total).toBe(31);
+    expect(dataSource.totalPage).toBe(7);
     expect(dataSource.hasNext).toBe(true);
     expect(dataSource.hasPrev).toBe(false);
+    dataSource.delete((1).toString());
+    dataSource.delete((2).toString());
+    expect(dataSource.total).toBe(29);
+    expect(dataSource.totalPage).toBe(6);
   });
 
   it('should paginate next and prev', async () => {
@@ -100,6 +105,19 @@ describe('Product Datasource', () => {
     dataSource.next();
     expect(dataSource.hasPrev).toBe(true);
     expect(dataSource.hasNext).toBe(false);
+  });
+
+  it('should find items and update', async () => {
+    dataSource.init(products, 10);
+    dataSource.find('#ITEM_1');
+    dataSource.update((1).toString(), {
+      name: 'Change product name',
+    });
+    const result = await firstValueFrom(dataSource.data);
+    expect(result).toHaveLength(10);
+    expect(dataSource.total).toBe(10);
+    expect(dataSource.hasNext).toBe(false);
+    expect(dataSource.hasPrev).toBe(false);
   });
 
 

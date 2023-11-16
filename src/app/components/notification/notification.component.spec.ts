@@ -6,6 +6,7 @@ import { NotificationType } from '../../models/product.model';
 describe('NotificationComponent', () => {
   let component: NotificationComponent;
   let fixture: ComponentFixture<NotificationComponent>;
+  let compiled: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -15,10 +16,15 @@ describe('NotificationComponent', () => {
     fixture = TestBed.createComponent(NotificationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    compiled = fixture.nativeElement;
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should match the snapshot', () => {
+    expect(compiled).toMatchSnapshot();
   });
 
   it('should display and error message', () => {
