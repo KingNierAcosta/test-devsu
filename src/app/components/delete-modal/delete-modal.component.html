@@ -8,7 +8,13 @@
     </button>
     <button (click)="removeProduct()" type="button" title="Confirmar" class="w-full rounded btn-default"
       [disabled]="removing">
+      @if (!removing) {
       Confirmar
+      } @else {
+      <div class="spinner">
+        Eliminando... <div class="spinner-loader"></div>
+      </div>
+      }
     </button>
   </div>
 </div>

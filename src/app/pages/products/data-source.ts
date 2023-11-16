@@ -21,7 +21,7 @@ export class DataSourceProduct extends DataSource<Product> {
   }
 
   init(products: Product[], size: number) {
-    products= [].concat(...Array(10).fill(products));
+    // products= [].concat(...Array(10).fill(products)); // to generate test data
     this._size = size;
     this._totalPage = Math.ceil(products.length / size);
     this._currentPage = 1;
