@@ -120,7 +120,13 @@
             Reiniciar
           </button>
           <button type="submit" title="Agregar" class="rounded btn-default" [disabled]="form.invalid || loading">
+            @if (!loading) {
             Enviar
+            } @else {
+            <div class="spinner">
+              Enviando... <div class="spinner-loader"></div>
+            </div>
+            }
           </button>
         </div>
       </form>

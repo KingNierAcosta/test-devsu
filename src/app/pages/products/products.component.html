@@ -79,6 +79,12 @@
         <tr cdk-header-row *cdkHeaderRowDef="columns" class="bg-gray-10 border-b-2"></tr>
         <tr cdk-row *cdkRowDef="let row; columns: columns;" class="border-b"></tr>
       </table>
+
+      @if (loading) {
+      <div class="spinner">
+        <div class="spinner-loader"></div> Cargado...
+      </div>
+      }
     </div>
     <div class="paginate">
       <span>{{dataSource.count}} Resultado{{dataSource.count > 1 ? 's' : ''}} de {{dataSource.total}}</span>

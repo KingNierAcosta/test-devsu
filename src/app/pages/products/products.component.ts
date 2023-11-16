@@ -5,7 +5,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { ProductService } from '../../services/product.service';
 import { DestroyComponent } from '../../components/destroy/destroy.component';
 import { DataSourceProduct } from './data-source';
-import { debounceTime, filter, takeUntil } from 'rxjs';
+import { debounceTime, filter, finalize, takeUntil } from 'rxjs';
 import { Router, RouterModule } from '@angular/router';
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -37,6 +37,7 @@ export class ProductsComponent extends DestroyComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 20];
   search = new FormControl('', { nonNullable: true });
   pageSize = new FormControl(this.pageSizeOptions[0], { nonNullable: true });
+  loading: boolean = false;
 
   constructor(
     private productService: ProductService,
@@ -48,8 +49,12 @@ export class ProductsComponent extends DestroyComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.loading = true;
     this.productService.getProducts()
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        finalize(() => this.loading = false),
+        takeUntil(this.destroy$)
+      )
       .subscribe(products => this.dataSource.init(products, this.pageSizeOptions[0]));
 
     this.search.valueChanges
