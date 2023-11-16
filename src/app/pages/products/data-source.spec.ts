@@ -9,7 +9,7 @@ describe('Product Datasource', () => {
   beforeEach(async () => {
     dataSource = new DataSourceProduct();
     products = [];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 32; i++) {
       products.push({
         id: i.toString(),
         name: `#ITEM_${i}`,
@@ -29,20 +29,27 @@ describe('Product Datasource', () => {
     dataSource.init(products, 7);
     const result = await firstValueFrom(dataSource.data);
     expect(result).toHaveLength(7);
+    expect(dataSource.totalPage).toBe(5);
   });
 
   it('should find and item', async () => {
     dataSource.init(products, 10);
     dataSource.find('#ITEM_1');
     const result = await firstValueFrom(dataSource.data);
-    expect(result).toHaveLength(11);
+    expect(result).toHaveLength(10);
+    expect(dataSource.total).toBe(11);
+    expect(dataSource.hasNext).toBe(true);
+    expect(dataSource.hasPrev).toBe(false);
   });
 
   it('should find and item case insensitive', async () => {
     dataSource.init(products, 10);
     dataSource.find('#item_1');
     const result = await firstValueFrom(dataSource.data);
-    expect(result).toHaveLength(11);
+    expect(result).toHaveLength(10);
+    expect(dataSource.total).toBe(11);
+    expect(dataSource.hasNext).toBe(true);
+    expect(dataSource.hasPrev).toBe(false);
   });
 
   it('should change page size', async () => {
@@ -64,4 +71,37 @@ describe('Product Datasource', () => {
     expect(updated).not.toBeNull();
     expect(updated).toEqual({ ...old, name: newName });
   });
+
+  it('should delete a product', async () => {
+    dataSource.init(products, 5);
+    dataSource.delete((12).toString());
+    const result = await firstValueFrom(dataSource.data);
+    expect(result).toHaveLength(5);
+    expect(dataSource.total).toBe(31);
+    expect(dataSource.hasNext).toBe(true);
+    expect(dataSource.hasPrev).toBe(false);
+  });
+
+  it('should paginate next and prev', async () => {
+    dataSource.init(products, 10);
+    await firstValueFrom(dataSource.data);
+    dataSource.next();
+    dataSource.next();
+    expect(dataSource.hasPrev).toBe(true);
+    expect(dataSource.hasNext).toBe(true);
+    dataSource.prev();
+    expect(dataSource.hasPrev).toBe(true);
+    expect(dataSource.hasNext).toBe(true);
+    dataSource.prev();
+    expect(dataSource.hasPrev).toBe(false);
+    expect(dataSource.hasNext).toBe(true);
+    dataSource.next();
+    dataSource.next();
+    dataSource.next();
+    expect(dataSource.hasPrev).toBe(true);
+    expect(dataSource.hasNext).toBe(false);
+  });
+
+
+
 });
