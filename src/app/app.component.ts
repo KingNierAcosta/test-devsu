@@ -11,5 +11,4 @@ import { HeaderComponent } from "./components/header/header.component";
     imports: [CommonModule, RouterOutlet, HeaderComponent]
 })
 export class AppComponent {
-  title = 'test-devsu';
 }
