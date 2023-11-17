@@ -26,6 +26,7 @@ describe('Product Datasource', () => {
   });
 
   it('should create product list and emit a subset of products', async () => {
+    expect(dataSource.totalPage).toBe(0);
     dataSource.init(products, 7);
     const result = await firstValueFrom(dataSource.data);
     expect(result).toHaveLength(7);
@@ -34,6 +35,7 @@ describe('Product Datasource', () => {
 
   it('should find and item', async () => {
     dataSource.init(products, 10);
+    dataSource.find('#ITEM_1');
     dataSource.find('#ITEM_1');
     const result = await firstValueFrom(dataSource.data);
     expect(result).toHaveLength(10);
@@ -70,6 +72,15 @@ describe('Product Datasource', () => {
     const updated = result.find((item) => item.id === (12).toString());
     expect(updated).not.toBeNull();
     expect(updated).toEqual({ ...old, name: newName });
+  });
+
+  it('update id that does not exist', async () => {
+    dataSource.init(products, 30);
+    jest.spyOn(dataSource, 'update');
+    dataSource.update((100).toString(), {
+      name: 'Test',
+    });
+    expect(dataSource.update).toHaveReturned();
   });
 
   it('should delete a product', async () => {
@@ -121,5 +132,22 @@ describe('Product Datasource', () => {
   });
 
 
+  it('should change the pagination and maintain the search criteria', async () => {
+    dataSource.init(products, 10);
+    dataSource.find('#ITEM_1');
+    dataSource.changePageSize(15);
+    const result = await firstValueFrom(dataSource.data);
+    expect(result).toHaveLength(11);
+    expect(dataSource.total).toBe(11);
+  });
 
+  it('should do not give error when you try to paginate without existing', async () => {
+    dataSource.init(products, 50);
+    jest.spyOn(dataSource, 'prev');
+    dataSource.prev()
+    expect(dataSource.prev).toHaveReturned();
+    jest.spyOn(dataSource, 'next');
+    dataSource.next()
+    expect(dataSource.next).toHaveReturned();
+  });
 });

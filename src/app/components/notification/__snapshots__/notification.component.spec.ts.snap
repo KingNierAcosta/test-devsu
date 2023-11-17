@@ -2,7 +2,7 @@
 
 exports[`NotificationComponent should match the snapshot 1`] = `
 <div
-  id="root2"
+  id="root1"
 >
   <div
     class="notification success"

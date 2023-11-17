@@ -45,12 +45,12 @@ export class AddProductComponent extends DestroyComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(3), Validators.max(10)],
+        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(10)],
         asyncValidators: [this.productService.uniqueProductId()],
         updateOn: 'blur'
       }),
-      name: new FormControl(null, [Validators.required, Validators.minLength(5), Validators.max(100)]),
-      description: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.max(200)]),
+      name: new FormControl(null, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
+      description: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.maxLength(200)]),
       logo: new FormControl(null, Validators.required),
       date_release: new FormControl(null, [Validators.required, currentDateValidator()]),
       date_revision: new FormControl({ value: null, disabled: true }, Validators.required),
